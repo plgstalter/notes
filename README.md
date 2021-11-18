@@ -21,3 +21,7 @@ When following a course in class 1, go in that directory and type `sh ../newfile
 This shell script is written for macs (zsh). So for different shells, there might be errors.
 
 This also uses python and modules `os` and `sys`.
+
+## Remarks
+
+The `header-includes.txt` file is for packages and command in `TeX`. To add new packages or commands, add new lines.
