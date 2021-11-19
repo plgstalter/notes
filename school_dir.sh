@@ -20,18 +20,6 @@ done' >> newdir.sh
 
 echo ' - \usepackage{amsmath}
  - \usepackage{stmaryrd}' > header-includes.txt
-printf %s ' - \' >> header-includes.txt  
-echo "newcommand{\dsum}{\displaystyle\sum}" >> header-includes.txt
-printf %s ' - \' >> header-includes.txt
-echo "newcommand{\R}{\mathbb R}" >> header-includes.txt
-printf %s ' - \' >> header-includes.txt
-echo "newcommand{\N}{\mathbb N}" >> header-includes.txt
-printf %s ' - \' >> header-includes.txt
-printf %s 'newcommand{\lrb}[1]{\llbracket{#1}\' >> header-includes.txt
-echo "rrbracket}" >> header-includes.txt
-printf %s ' - \' >> header-includes.txt
-printf %s 'newcommand{\ens}[1]{\left\{{#1}\' >> header-includes.txt
-echo "right\}}" >> header-includes.txt
 
 echo 'if [ -f `date "+%d_%m"`.md ]; then
 	echo "le fichier existe déjà"
