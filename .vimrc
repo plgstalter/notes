@@ -74,8 +74,15 @@ autocmd BufRead,BufNewFile,BufEnter *.md,*.markdown call s:md_abbrevations()
 function! s:md_abbrevations()
 	iabbrev \R \mathbb R
 	iabbrev \N \mathbb N
-	iabbrev lrb llbracket\rrbracket<esc>9hi
-	iabbrev dsum displaystyle\sum
-	iabbrev dprod displaystyle\prod
-	iabbrev dint displaystyle\int
+	iabbrev \C \mathbb C
+	iabbrev \Q \mathbb Q
+	iabbrev \Z \mathbb Z
+	iabbrev lrb \llbracket\rrbracket<esc>9hi
+	iabbrev dsum \displaystyle\sum
+	iabbrev dprod \displaystyle\prod
+	iabbrev dint \displaystyle\int
+	iabbrev syst \begin{cases}<cr>\end{cases}<esc>O
+	iabbrev mmax \underset{}{\max}\text{ }esc>14hi
+	iabbrev mmin \underset{}{\min}\text{ }<esc>14hi
+	iabbrev enss \left\{\right\}<esc>7hi
 endfunction
