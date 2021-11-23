@@ -108,9 +108,9 @@ function! s:md_abbrevations()
 	iabbrev dsum \displaystyle\sum
 	iabbrev dprod \displaystyle\prod
 	iabbrev dint \displaystyle\int
-	iabbrev syst \begin{cases}<cr>\end{cases}<esc>O
-	iabbrev mmax \underset{}{\max}\text{ }<esc>14hi
-	iabbrev mmin \underset{}{\min}\text{ }<esc>14hi
+	iabbrev syst \begin{cases<cr>\end{cases<esc>ldWO
+	iabbrev mmax \underset{}{\max}\text{ }<esc>ldW14hi
+	iabbrev mmin \underset{}{\min}\text{ }<esc>ldW14hi
 	iabbrev enss \left\{\right\<esc>6hi
 	iabbrev comp \mathcal O(
 	iabbrev riar \rightarrow
@@ -119,7 +119,9 @@ function! s:md_abbrevations()
 	iabbrev lrar \longrightarrow
 	iabbrev esp \mathbb E\left[\right<esc>5hi
 	iabbrev osim \overset\sim
-	iabbrev msp \text{ }
+	iabbrev msp \text{ }<esc>ls
+	iabbrev ssup \underset{}{\sup}\text{ }<esc>ldW14hi
+	iabbrev iinf \underset{}{\inf}\text{ }<esc>ldW14hi
 endfunction
 
 autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
