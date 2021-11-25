@@ -4,11 +4,8 @@ set backspace=indent,eol,start
 set number
 set ruler
 
-
-imap <c-d> <esc>ddi
-imap <c-w> <esc>:w<CR>i
 let mapleader = ","
-let maplocalleader = "\\"
+let maplocalleader = ";"
 
 
 " plugins
@@ -63,6 +60,13 @@ endfunction
 " typo self-correction
 :iabbrev onne one
 
+" filetype specific commenting
+:autocmd FileType python nnoremap <buffer> <localleader>c I#<esc>
+:autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc>
+:autocmd FileType html nnoremap <buffer> <localleader>c I<--<esc>A--><esc>
+:autocmd FileType cpp nnoremap <buffer> <localleader>c I//<esc>
+
+
 " Syntax Highlighting
 filetype plugin on
 au FileType php setl ofu=phpcomplete#CompletePHP
@@ -76,9 +80,10 @@ autocmd FileType python call s:python_abbrevations()
 
 function! s:python_abbrevations()
 	iabbrev test test-py
+	iabbrev if if :<left>
 endfunction
 
-autocmd BufRead,BufNewFile,BufEnter *.cpp call s:cpp_abbrevations()
+autocmd FileType cpp call s:cpp_abbrevations()
 
 function! s:cpp_abbrevations()
 	iabbrev ret return
@@ -94,27 +99,35 @@ function! s:html_abbrevations()
 	iabbrev html html><cr></html><esc>O
 	iabbrev head head><cr></head><esc>O
 	iabbrev body body><cr></body><esc>O
+	iabbrev div div><cr></div><esc>O
+	iabbrev aa a href""></a><esc>5hi
 endfunction
 
-autocmd BufRead,BufNewFile,BufEnter *.md,*.markdown call s:md_abbrevations()
+autocmd FileType markdown call s:md_tweaks()
 
-function! s:md_abbrevations()
+function! s:md_tweaks()
+	"write in Zen Mode
+	call ZenModeToggle()
+
+	"abbreviations
 	iabbrev \R \mathbb R
 	iabbrev \N \mathbb N
 	iabbrev \C \mathbb C
 	iabbrev \Q \mathbb Q
 	iabbrev \Z \mathbb Z
 	iabbrev lrb \llbracket\rrbracket<esc>9hi
-	iabbrev dsum \displaystyle\sum
-	iabbrev dprod \displaystyle\prod
+	iabbrev dsum \displaystyle\sum_{
+	iabbrev dprod \displaystyle\prod_{
 	iabbrev dint \displaystyle\int
-	iabbrev syst \begin{cases<cr>\end{cases<esc>ldWO
+	iabbrev syst \begin{cases}<cr>\end{cases}<esc>ldWO
 	iabbrev mmax \underset{}{\max}\text{ }<esc>ldW14hi
 	iabbrev mmin \underset{}{\min}\text{ }<esc>ldW14hi
 	iabbrev enss \left\{\right\<esc>6hi
 	iabbrev comp \mathcal O(
 	iabbrev riar \rightarrow
+	iabbrev lear \leftarrow
 	iabbrev Riar \Rightarrow
+	iabbrev Lear \Leftarrow
 	iabbrev Lriar \Leftrightarrow
 	iabbrev lrar \longrightarrow
 	iabbrev esp \mathbb E\left[\right<esc>5hi
@@ -122,12 +135,18 @@ function! s:md_abbrevations()
 	iabbrev msp \text{ }<esc>ls
 	iabbrev ssup \underset{}{\sup}\text{ }<esc>ldW14hi
 	iabbrev iinf \underset{}{\inf}\text{ }<esc>ldW14hi
-endfunction
+	iabbrev eps \varepsilon   
 
-autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+	" auto complete
+	inoremap $ $$<left>
+	inoremap _ __<left>
+	inoremap \{ \{\}<esc>hi
+	inoremap \left\{ \left\{\right\}<esc>7hi
+	inoremap \left( \left(\right)<esc>6hi
+	inoremap \left[ \left[\right]<esc>6hi
 
-function! MathAndLiquid()
-    "" Define certain regions
+	"highlight mathematic equations
+	"" Define certain regions
     " Block math. Look for "$$[anything]$$"
     syn region math start=/\$\$/ end=/\$\$/
     " inline math. Look for "$[not $][anything]$"
@@ -146,9 +165,6 @@ function! MathAndLiquid()
     hi link highlight_block Function
     hi link math_block Function
 endfunction
-
-" Call everytime we open a Markdown file
-autocmd BufRead,BufNewFile,BufEnter *.md,*.markdown call MathAndLiquid()
 
 set wildmenu
 set wildmode=list:longest
