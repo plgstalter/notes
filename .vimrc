@@ -15,6 +15,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 Plug 'davidhalter/jedi-vim'
 call plug#end()
 
+""
 nnoremap <leader>ev :split $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>" <esc>Bi"<esc>Wa"
@@ -22,12 +23,20 @@ nnoremap <leader>' <esc>Bi'<esc>Wa'
 nnoremap <leader>f :call FoldColumnToggle()<cr>
 nnoremap <leader>q :call QuickfixToggle()<cr>
 nnoremap <leader>z :call ZenModeToggle()<cr>
+nmap <leader>m <Plug>MarkdownPreview
+
+""
 inoremap " ""<left>
-inoremap ' ''<left>
 inoremap ( ()<left>
 inoremap [ []<left>
 inoremap { {}<left>
 inoremap {<CR> {<CR>}<ESC>O
+
+""
+onoremap in( :<c-u>normal! f(vi(<cr>
+onoremap il( :<c-u>normal! F(vi(<cr>
+onoremap in{ :<c-u>normal! f{vi{<cr>
+onoremap il{ :<c-u>normal! F{vi{<cr>
 
 function! ZenModeToggle()
 	set number!
@@ -109,7 +118,7 @@ function! s:md_tweaks()
 	"write in Zen Mode
 	call ZenModeToggle()
 
-	"abbreviations
+	" math abbreviations
 	iabbrev \R \mathbb R
 	iabbrev \N \mathbb N
 	iabbrev \C \mathbb C
@@ -130,40 +139,49 @@ function! s:md_tweaks()
 	iabbrev Lear \Leftarrow
 	iabbrev Lriar \Leftrightarrow
 	iabbrev lrar \longrightarrow
-	iabbrev esp \mathbb E\left[\right<esc>5hi
+	iabbrev esp \mathbb E\left[<esc>a
 	iabbrev osim \overset\sim
 	iabbrev msp \text{ }<esc>ls
 	iabbrev ssup \underset{}{\sup}\text{ }<esc>ldW14hi
 	iabbrev iinf \underset{}{\inf}\text{ }<esc>ldW14hi
 	iabbrev eps \varepsilon   
+	iabbrev pre< \preccurlyeq
+	iabbrev suc> \succcurlyeq
+	iabbrev o+ \oplus
+	iabbrev ox \otimes
+
+	" text abbreviations
+	iabbrev iff if and only if
+	iabbrev ofc of course
+
+	" autocorrect
+	iabbrev inn in
+	iabbrev innfty infty
+
+	" just in case the word inn is actually needed
+	iabbrev _inn inn
 
 	" auto complete
 	inoremap $ $$<left>
-	inoremap _ __<left>
 	inoremap \{ \{\}<esc>hi
 	inoremap \left\{ \left\{\right\}<esc>7hi
 	inoremap \left( \left(\right)<esc>6hi
 	inoremap \left[ \left[\right]<esc>6hi
 
 	"highlight mathematic equations
-	"" Define certain regions
+	" Define certain regions
     " Block math. Look for "$$[anything]$$"
     syn region math start=/\$\$/ end=/\$\$/
     " inline math. Look for "$[not $][anything]$"
     syn match math_block '\$[^$].\{-}\$'
+    "multiline math. Look for "$[anything][anything][anything]$"
+    syn region multiline_math start=/\$/ end=/\$/
 
-    " Liquid single line. Look for "{%[anything]%}"
-    syn match liquid '{%.*%}'
-    " Liquid multiline. Look for "{%[anything]%}[anything]{%[anything]%}"
-    syn region highlight_block start='{% highlight .*%}' end='{%.*%}'
-    " Fenced code blocks, used in GitHub Flavored Markdown (GFM)
-    syn region highlight_block start='```' end='```'
-
-    "" Actually highlight those regions.
+    " Actually highlight those regions.
     hi link math Statement
-    hi link liquid Statement
-    hi link highlight_block Function
     hi link math_block Function
+    hi link multiline_math Function
+
 endfunction
 
 set wildmenu
