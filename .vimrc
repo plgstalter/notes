@@ -131,7 +131,7 @@ function! s:md_tweaks()
 	iabbrev syst \begin{cases}<cr>\end{cases}<esc>ldWO
 	iabbrev mmax \underset{}{\max}\text{ }<esc>ldW14hi
 	iabbrev mmin \underset{}{\min}\text{ }<esc>ldW14hi
-	iabbrev enss \left\{\right\<esc>6hi
+	iabbrev enss \left\{<esc>a
 	iabbrev comp \mathcal O(
 	iabbrev riar \rightarrow
 	iabbrev lear \leftarrow
@@ -140,6 +140,7 @@ function! s:md_tweaks()
 	iabbrev Lriar \Leftrightarrow
 	iabbrev lrar \longrightarrow
 	iabbrev esp \mathbb E\left[<esc>a
+	iabbrev espp \mathbb E_{<esc>lli \left[<esc>3bli
 	iabbrev osim \overset\sim
 	iabbrev msp \text{ }<esc>ls
 	iabbrev ssup \underset{}{\sup}\text{ }<esc>ldW14hi
