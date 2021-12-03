@@ -15,10 +15,22 @@ def nice_date(date: str, language: int):
     2: english
     3: italiano
     '''" >> nice_date.py
-echo '    if  language == 1:
+echo '
+    if  date[8] == "0":
+        day = date[9]
+    else:
+        day = date[8:]
+
+    if  language == 1:
         return date[8:] + " " + fr_months[int(date[5:7])] + " " + date[:4]
     elif language == 2:
-        return date[8:] + " " + en_months[int(date[5:7])] + " " + date[:4]
+        if int(day)%10 == 1:
+	    day += "st"
+	elif int(day)%10 == 2:
+  	    day += "nd"
+	elif int(day)%10 == 3:
+	    day += "rd"
+	return date[8:] + " " + en_months[int(date[5:7])] + " " + date[:4]
     elif language == 3:
         return date[8:] + " " + it_months[int(date[5:7])] + " " + date[:4]
 
