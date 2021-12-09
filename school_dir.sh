@@ -30,6 +30,8 @@ echo '
   	    day += "nd"
 	elif int(day)%10 == 3:
 	    day += "rd"
+	else:
+	    day += "th"
 	return date[8:] + " " + en_months[int(date[5:7])] + " " + date[:4]
     elif language == 3:
         return date[8:] + " " + it_months[int(date[5:7])] + " " + date[:4]
