@@ -1,12 +1,10 @@
 mkdir $1
 cd $1
 
-z='from sys import argv
+echo 'from sys import argv
 \nfr_months = {1: "janvier", 2: "février", 3: "mars", 4: "avril", 5: "mai", 6: "juin", 7: "juillet", 8: "août", 9: "septembre", 10: "octobre", 11: "novembre", 12: "décembre"}
 \nen_months= {1: "January", 2: "February", 3: "March", 4: "April", 5: "May", 6: "June", 7: "July", 8: "August", 9: "September", 10: "October", 11: "November", 12: "December"}
-\nit_months = {1: "gennaio", 2: "febbraio", 3: "marzo", 4: "aprile", 5: "maggio", 6: "giugno", 7: "luglio", 8: "agosto", 9: "settembre", 10: "ottobre", 11: "novembre", 12: "dicembre"}'
-
-echo $z >> nice_date.py
+\nit_months = {1: "gennaio", 2: "febbraio", 3: "marzo", 4: "aprile", 5: "maggio", 6: "giugno", 7: "luglio", 8: "agosto", 9: "settembre", 10: "ottobre", 11: "novembre", 12: "dicembre"}' > nice_date.py
 echo "
 def nice_date(date: str, language: int):
     '''
@@ -45,27 +43,15 @@ if  __name__ == "__main__":
         print(nice_date(argv[1], int(argv[2])))
 ' >> nice_date.py
 
+echo ' - \usepackage{amsmath}\n - \usepackage{stmaryrd}' > header-includes.txt
+
 echo 'for dir in "$@"; do
-mkdir $dir $dir/src $dir/source $dir/output
+
+mkdir $dir $dir/source $dir/output
 echo 2 >> $dir/language.txt
+echo "title: \nauthor: " >> $dir/info.txt
 
-echo "mv *.md source
-mv *.pdf output" >> $dir/src/orga.py
-
-echo "import os
-from sys import argv
-
-if len(argv)<2:
-    raise AttributeError(rentrez le document demandé svp)
-else:
-    os.system(pandoc -o {}.pdf {}.md.format(argv[1], argv[1]))" >> $dir/src/run.py
-echo "title: 
-author: " >> $dir/info.txt
-
-done' >> newdir.sh
-
-echo ' - \usepackage{amsmath}
- - \usepackage{stmaryrd}' > header-includes.txt
+done' >> newdir
 
 echo 'if [ -f `date "+%d_%m"`.md ]; then
 	echo "le fichier existe déjà"
@@ -78,11 +64,14 @@ else
 	echo "header-includes:" >> `date "+%d_%m"`.md
 	cat ../header-includes.txt >> `date "+%d_%m"`.md
 	echo "---" 		>> `date "+%d_%m"`.md
-fi
+fi\nvim `date "+%d_%m"`.md' >> newfile
 
-vim `date "+%d_%m"`.md' >> newfile.sh
-
-echo 'python src/run.py `date "+%d_%m"` ; open `date "+%d_%m"`.pdf' >> run_last.sh
-
+echo "#!/bin/zsh\n\nmv *.md source\nmv *.pdf output" > orga
+echo "#!/bin/zsh\n\npandoc -o `date "+%d_%m"`.pdf `date "+%d_%m"`.md && echo "c est bon ça compile"" > run_last
 echo '#!/bin/zsh\n\nopen $(grep -lr "$*" source/* | tr 'source' 'output' | sed 's/.md/.pdf/')' >> lookfor
+
 chmod u+x lookfor
+chmod u+x orga
+chmod u+x run_last
+chmod u+x newdir
+chmod u+x newfile
