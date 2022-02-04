@@ -83,3 +83,6 @@ fi
 vim `date "+%d_%m"`.md' >> newfile.sh
 
 echo 'python src/run.py `date "+%d_%m"` ; open `date "+%d_%m"`.pdf' >> run_last.sh
+
+echo '#!/bin/zsh\n\nopen $(grep -lr "$*" source/* | tr 'source' 'output' | sed 's/.md/.pdf/')' >> lookfor
+chmod u+x lookfor
