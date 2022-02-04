@@ -25,3 +25,42 @@ This also uses python and modules `os` and `sys`.
 ## Remarks
 
 The `header-includes.txt` file is for packages and command in `TeX`. To add new packages or commands, add new lines.
+
+## Structure :
+
+```bash
+.
+├── Dir_1
+│   ├── info.txt
+│   ├── language.txt
+│   ├── output
+│   ├── source
+│   └── src
+│       ├── orga.py
+│       └── run.py
+├── Dir_2
+│   ├── info.txt
+│   ├── language.txt
+│   ├── output
+│   ├── source
+│   └── src
+│       ├── orga.py
+│       └── run.py
+├── Dir_3
+│   ├── info.txt
+│   ├── language.txt
+│   ├── output
+│   ├── source
+│   └── src
+│       ├── orga.py
+│       └── run.py
+├── header-includes.txt
+├── lookfor
+├── newdir.sh
+├── newfile.sh
+├── nice_date.py
+└── run_last.sh
+```
+
+12 directories, 18 files
+
