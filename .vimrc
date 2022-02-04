@@ -15,6 +15,8 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 Plug 'davidhalter/jedi-vim'
 call plug#end()
 
+" let g:mkdp_browser = 'safari'
+
 ""
 nnoremap <leader>ev :split $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
@@ -24,6 +26,8 @@ nnoremap <leader>f :call FoldColumnToggle()<cr>
 nnoremap <leader>q :call QuickfixToggle()<cr>
 nnoremap <leader>z :call ZenModeToggle()<cr>
 nmap <leader>m <Plug>MarkdownPreview
+vnoremap <cmd-c> "+y
+map <cmd-v> "+P
 
 ""
 inoremap " ""<left>
@@ -62,18 +66,21 @@ function! FoldColumnToggle()
 endfunction
 
 " shortcuts
-:iabbrev @@ pierrelouisgstalter67@gmail.com
-:iabbrev ccopy © 2021 Pierre-Louis Gstalter
+:iabbrev @@ pierre-louis.gstalter@minesparis.psl.eu
+:iabbrev ccopy © 2022 Pierre-Louis Gstalter
 :iabbrev ssig -- <cr>Pierre-Louis Gstalter<cr>Élève de deuxième année aux Mines de Paris<cr>
 
 " typo self-correction
 :iabbrev onne one
+:iabbrev Onne One
+:iabbrev annd and
 
 " filetype specific commenting
 :autocmd FileType python nnoremap <buffer> <localleader>c I#<esc>
 :autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc>
 :autocmd FileType html nnoremap <buffer> <localleader>c I<--<esc>A--><esc>
 :autocmd FileType cpp nnoremap <buffer> <localleader>c I//<esc>
+:autocmd FileType cpp nnoremap <buffer> <localleader>k 0xx$
 
 
 " Syntax Highlighting
@@ -83,6 +90,7 @@ au FileType ruby,eruby setl ofu=rubycomplete#Complete
 au FileType html,xhtml setl ofu=htmlcomplete#CompleteTags
 au FileType c setl ofu=ccomplete#CompleteCpp
 au FileType css setl ofu=csscomplete#CompleteCSS
+au FileType cpp setl ofu=cppcomplete#CompleteCpp
 
 " FileType specific scripting
 autocmd FileType python call s:python_abbrevations()
@@ -98,7 +106,20 @@ function! s:cpp_abbrevations()
 	iabbrev ret return
 	iabbrev inc #include
 	iabbrev ios <iostream>
-	iabbrev main int main(int argc, char const *argv[]) { <cr> return 0; <cr> } <esc>kO
+	iabbrev main int main(int argc, char const *argv[]) { <cr> return 0; <cr> } <esc>4xkO
+	iabbrev vec std::vector<
+	iabbrev mess std::cout << << std::endl;<esc>2Bi
+	iabbrev class class {<cr><esc>ja;<esc>2k0whi
+
+endfunction
+
+autocmd FileType C call s:C_abbrevations()
+
+function! s:C_abbrevations()
+	iabbrev ret return
+	iabbrev inc #include
+	iabbrev main int main(int argc, char const *argv[]) { <cr> return 0; <cr> } <esc>4xkO
+
 endfunction
 
 autocmd FileType html call s:html_abbrevations()
@@ -128,9 +149,9 @@ function! s:md_tweaks()
 	iabbrev dsum \displaystyle\sum_{
 	iabbrev dprod \displaystyle\prod_{
 	iabbrev dint \displaystyle\int
-	iabbrev syst \begin{cases}<cr>\end{cases}<esc>ldWO
-	iabbrev mmax \underset{}{\max}\text{ }<esc>ldW14hi
-	iabbrev mmin \underset{}{\min}\text{ }<esc>ldW14hi
+	iabbrev syst \begin{cases}<cr>\end{cases}<esc>2xO
+	iabbrev mmax \underset{}{\max}\text{ }<esc>l3x5ba
+	iabbrev mmin \underset{}{\min}\text{ }<esc>l3x5ba
 	iabbrev enss \left\{<esc>a
 	iabbrev comp \mathcal O(
 	iabbrev riar \rightarrow
@@ -150,6 +171,10 @@ function! s:md_tweaks()
 	iabbrev suc> \succcurlyeq
 	iabbrev o+ \oplus
 	iabbrev ox \otimes
+	iabbrev floor \lfloor\rfloor<esc>6hi
+	iabbrev mat \begin{pmatrix}\end{pmatrix}<esc>2x3bhi
+	iabbrev vv \vee
+	iabbrev ww \wedge
 
 	" text abbreviations
 	iabbrev iff if and only if

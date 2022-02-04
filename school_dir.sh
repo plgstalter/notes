@@ -70,8 +70,4 @@ echo "#!/bin/zsh\n\nmv *.md source\nmv *.pdf output" > orga
 echo "#!/bin/zsh\n\npandoc -o `date "+%d_%m"`.pdf `date "+%d_%m"`.md && echo "c est bon ça compile"" > run_last
 echo '#!/bin/zsh\n\nopen $(grep -lr "$*" source/* | tr 'source' 'output' | sed 's/.md/.pdf/')' >> lookfor
 
-chmod u+x lookfor
-chmod u+x orga
-chmod u+x run_last
-chmod u+x newdir
-chmod u+x newfile
+chmod u+x lookfor orga run_last newdir newfile

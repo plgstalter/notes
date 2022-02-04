@@ -29,38 +29,40 @@ The `header-includes.txt` file is for packages and command in `TeX`. To add new 
 ## Structure :
 
 ```bash
+Example
 .
-├── Dir_1
+├── Dir1
 │   ├── info.txt
 │   ├── language.txt
 │   ├── output
-│   ├── source
-│   └── src
-│       ├── orga.py
-│       └── run.py
-├── Dir_2
+│   │   └── 04_02.pdf
+│   └── source
+│       └── 04_02.md
+├── Dir2
 │   ├── info.txt
 │   ├── language.txt
 │   ├── output
-│   ├── source
-│   └── src
-│       ├── orga.py
-│       └── run.py
-├── Dir_3
+│   └── source
+├── Dir3
 │   ├── info.txt
 │   ├── language.txt
 │   ├── output
-│   ├── source
-│   └── src
-│       ├── orga.py
-│       └── run.py
+│   └── source
 ├── header-includes.txt
 ├── lookfor
-├── newdir.sh
-├── newfile.sh
+├── newdir
+├── newfile
 ├── nice_date.py
-└── run_last.sh
+├── orga
+└── run_last
 ```
 
-12 directories, 18 files
+### Looking for something
 
+In a given directory,
+
+```bash
+../lookup these words
+```
+
+Will open the pdfs containing "these words".
